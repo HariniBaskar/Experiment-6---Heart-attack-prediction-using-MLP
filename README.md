@@ -15,12 +15,55 @@ Step 10:Print the accuracy of the model.<br>
 Step 11:Plot the error convergence during training using plt.plot() and plt.show().<br>
 
 ## Program:
+```
 
+import numpy as np
+import pandas as pd 
+from sklearn.neural_network import MLPClassifier 
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler 
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
+data=pd.read_csv("/content/heart.csv")
+X=data.iloc[:, :-1].values #features 
+Y=data.iloc[:, -1].values  #labels 
+
+X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=0.2,random_state=42)
+
+scaler=StandardScaler()
+X_train=scaler.fit_transform(X_train)
+X_test=scaler.transform(X_test)
+
+mlp=MLPClassifier(hidden_layer_sizes=(100,100),max_iter=1000,random_state=42)
+training_loss=mlp.fit(X_train,y_train).loss_curve_
+
+y_pred=mlp.predict(X_test)
+
+accuracy=accuracy_score(y_test,y_pred)
+print("Accuracy",accuracy)
+
+plt.plot(training_loss)
+plt.title("MLP Training Loss Convergence")
+plt.xlabel("Iteration")
+plt.ylabel("Training Losss")
+plt.show()
+
+```
 
 ## Output:
+## X Values:
+![image](https://github.com/HariniBaskar/Experiment-6---Heart-attack-prediction-using-MLP/assets/93427253/3b0f3d44-6384-4ab1-a1df-070cca70c177)
+
+## Y Values:
+![image](https://github.com/HariniBaskar/Experiment-6---Heart-attack-prediction-using-MLP/assets/93427253/fcdb3aac-2fe8-46f2-8fe0-6868ba887521)
+
+## Accuracy:
+![image](https://github.com/HariniBaskar/Experiment-6---Heart-attack-prediction-using-MLP/assets/93427253/97999c02-41d1-4d68-bf34-63116b8306e1)
+
+## Loss Convergence Graph:
+![image](https://github.com/HariniBaskar/Experiment-6---Heart-attack-prediction-using-MLP/assets/93427253/b639e07d-801c-4c0a-8268-d449e6dbc4ef)
 
 ## Result:
-     Thus, an ANN with MLP is constructed and trained to predict the heart attack using python.
+Thus, an ANN with MLP is constructed and trained to predict the heart attack using python.
      
-
